@@ -43,7 +43,6 @@ export default class GameController {
 
   start() {
     this.interval = setInterval(() => {
-      // Если персонаж уже на поле, значит, мы пропустили клик
       if (this.currentPosition !== -1) {
         this.misses += 1;
         this.updateStats();
@@ -73,8 +72,6 @@ export default class GameController {
       this.updateStats();
       this.cells[this.currentPosition].innerHTML = '';
       this.currentPosition = -1;
-
-      // Сбрасываем и перезапускаем интервал, чтобы не было двойного наказания
       clearInterval(this.interval);
       this.start();
     }
