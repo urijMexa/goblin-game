@@ -1,7 +1,7 @@
 import '../css/style.css';
-import Game from './Game';
+import GameController from './GameController';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const game = new Game();
-    game.init();
+  const game = new GameController();
+  game.init();
 });
