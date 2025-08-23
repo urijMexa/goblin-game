@@ -1,0 +1,8 @@
+# Зависимости
+/node_modules
+
+# Папка со сборкой
+/dist
+
+# Логи npm
+npm-debug.log*
