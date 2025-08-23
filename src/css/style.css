@@ -20,7 +20,7 @@ body {
     border: 2px solid #333;
     padding: 10px;
     /* Устанавливаем кастомный курсор для всего игрового поля */
-    cursor: url('src/img/hammer.png'), pointer;
+    cursor: url('../img/hammer.png'), pointer;
 }
 
 .cell {
