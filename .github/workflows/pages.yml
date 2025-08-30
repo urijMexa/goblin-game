@@ -23,4 +23,16 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies 📦
-        run: yarn ins
+        run: yarn install
+
+      - name: Lint code 🧐
+        run: yarn lint
+
+      - name: Build 🏗️
+        run: yarn build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: dist
