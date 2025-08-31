@@ -1,0 +1,11 @@
+environment:
+  nodejs_version: "18"
+
+install:
+  - npm install -g yarn
+  - yarn install
+
+build: off
+
+test_script:
+  - yarn test

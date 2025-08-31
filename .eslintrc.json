@@ -1,1 +1,1 @@
-{ "extends": "airbnb-base", "env": { "browser": true }, "rules": { "import/prefer-default-export": "off", "no-alert": "off", "no-plusplus": "off" } }
+{ "extends": "airbnb-base", "env": { "browser": true, "jest": true }, "rules": { "import/prefer-default-export": "off", "no-alert": "off" } }
