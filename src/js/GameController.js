@@ -30,6 +30,7 @@ export class GameController {
   startGame() {
     this.timer = setInterval(() => {
       if (!this.isGameActive) return;
+
       this.moveGoblin();
     }, 1000);
   }
@@ -47,8 +48,8 @@ export class GameController {
 
     // Устанавливаем новый таймер для скрытия гоблина через 1 секунду
     this.goblinTimer = setTimeout(() => {
-      if (this.isGameActive && this.goblin.isVisible) {
-        this.handleMiss();
+      if (this.isGameActive) {
+        this.handleMiss(); // Всегда увеличиваем промахи при исчезновении гоблина
         this.goblin.hide();
       }
     }, 1000);
