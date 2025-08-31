@@ -1,7 +1,7 @@
 import { Board } from './Board.js';
 import { Goblin } from './Goblin.js';
 import { GameController } from './GameController.js';
-import './css/style.css';
+import '../css/style.css'; // Исправленный путь
 
 document.addEventListener('DOMContentLoaded', () => {
   const board = new Board(4);
