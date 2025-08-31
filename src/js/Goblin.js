@@ -1,38 +1,61 @@
-import goblinImg from '../img/goblin.png';
-
-export default class Goblin {
+export class Goblin {
   constructor(board) {
     this.board = board;
-    this.element = null;
-    this.currentPosition = -1;
+    this.currentPosition = null;
+    this.isVisible = false;
+    this.previousPosition = null;
+
+    this.element = document.createElement('img');
+    this.element.src = './img/goblin.png';
+    this.element.className = 'goblin';
+    this.element.style.display = 'none';
+
+    document.body.appendChild(this.element);
   }
 
-  static createElement() {
-    const el = document.createElement('img');
-    el.src = goblinImg;
-    el.classList.add('goblin');
-    el.alt = 'Goblin character';
-    return el;
-  }
+  move() {
+    const availablePositions = [];
 
-  place() {
-    let newPosition;
-    do {
-      newPosition = Math.floor(Math.random() * this.board.cells.length);
-    } while (newPosition === this.currentPosition);
-
-    if (this.currentPosition !== -1) {
-      this.board.cells[this.currentPosition].innerHTML = '';
+    for (let i = 0; i < this.board.cells.length; i++) {
+      // Исключаем текущую позицию и предыдущую позицию
+      if (i !== this.currentPosition && i !== this.previousPosition) {
+        availablePositions.push(i);
+      }
     }
 
+    if (availablePositions.length === 0) {
+      return false; // Нет доступных позиций
+    }
+
+    const randomIndex = Math.floor(Math.random() * availablePositions.length);
+    const newPosition = availablePositions[randomIndex];
+
+    this.previousPosition = this.currentPosition;
     this.currentPosition = newPosition;
-    this.board.cells[this.currentPosition].append(this.element);
+    this.show();
+
+    return true;
   }
 
-  remove() {
-    if (this.currentPosition !== -1) {
-      this.board.cells[this.currentPosition].innerHTML = '';
-      this.currentPosition = -1;
+  show() {
+    if (this.currentPosition === null) return;
+
+    const cell = this.board.cells[this.currentPosition];
+    cell.appendChild(this.element);
+    this.element.style.display = 'block';
+    this.isVisible = true;
+  }
+
+  hide() {
+    this.element.style.display = 'none';
+    this.isVisible = false;
+
+    // Удаляем гоблина из ячейки
+    if (this.currentPosition !== null) {
+      const cell = this.board.cells[this.currentPosition];
+      if (cell.contains(this.element)) {
+        cell.removeChild(this.element);
+      }
     }
   }
 }

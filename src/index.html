@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whack the Goblin!</title>
+    <title>Goblin Game</title>
 </head>
 <body>
-<div class="stats">
-    <p>Score: <span id="score">0</span></p>
-    <p>Misses: <span id="misses">0</span></p>
-</div>
-<div id="game-container"></div>
+<div class="container">
+    <div class="stats">
+        <div id="score">Score: 0</div>
+        <div id="misses">Misses: 0/5</div>
+    </div>
 
-<div class="modal-overlay hidden">
-    <div class="modal">
-        <h2>Game Over</h2>
-        <p>Your score: <span id="modal-score">0</span></p>
-        <button id="play-again-button">Play Again</button>
+    <div id="board" class="board"></div>
+</div>
+
+<div id="gameModal" class="modal">
+    <div class="modal-content">
+        <h2 id="modalMessage">Game Over!</h2>
+        <button id="restartButton">Restart Game</button>
     </div>
 </div>
 </body>

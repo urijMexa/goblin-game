@@ -1,1 +1,15 @@
-{ "extends": "airbnb-base", "env": { "browser": true, "jest": true }, "rules": { "import/prefer-default-export": "off", "no-alert": "off" } }
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off"
+  }
+}
