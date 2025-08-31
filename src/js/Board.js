@@ -1,16 +1,26 @@
-export default class Board {
+export class Board {
   constructor(size) {
     this.size = size;
-    this.container = document.getElementById('game-container');
     this.cells = [];
+    this.init();
   }
 
-  drawBoard() {
-    for (let i = 0; i < this.size ** 2; i += 1) {
+  init() {
+    const boardElement = document.getElementById('board');
+    boardElement.style.gridTemplateColumns = `repeat(${this.size}, 1fr)`;
+
+    for (let i = 0; i < this.size * this.size; i++) {
       const cell = document.createElement('div');
-      cell.classList.add('cell');
-      this.container.append(cell);
+      cell.className = 'cell';
+      cell.dataset.index = i;
+      boardElement.appendChild(cell);
       this.cells.push(cell);
     }
+  }
+
+  clear() {
+    this.cells.forEach(cell => {
+      cell.innerHTML = '';
+    });
   }
 }
