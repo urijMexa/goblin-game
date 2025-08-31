@@ -72,6 +72,10 @@ body {
     display: none;
 }
 
+.goblin-visible {
+    display: block;
+}
+
 .modal {
     display: none;
     position: fixed;
