@@ -11,15 +11,15 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
 }
 
 .stats {
-    margin-bottom: 30px;
-    font-size: 20px;
+    margin-bottom: 20px;
+    font-size: 18px;
     height: 60px;
     display: flex;
     flex-direction: column;
@@ -29,31 +29,29 @@ body {
 .board {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 30px;
-    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .cell {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     background-color: #ddd;
-    border: 3px solid #333;
-    border-radius: 8px;
+    border: 2px solid #333;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: background-color 0.3s;
     position: relative;
-    overflow: hidden;
 }
 
 .cell::before {
     content: '';
     display: block;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     visibility: hidden;
 }
 
@@ -62,18 +60,9 @@ body {
 }
 
 .goblin {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: none;
-}
-
-.goblin-visible {
-    display: block;
 }
 
 .modal {
