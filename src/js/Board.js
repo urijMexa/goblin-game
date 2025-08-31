@@ -9,6 +9,9 @@ export class Board {
     const boardElement = document.getElementById('board');
     boardElement.style.gridTemplateColumns = `repeat(${this.size}, 1fr)`;
 
+    // Очищаем доску перед созданием новых ячеек
+    boardElement.innerHTML = '';
+
     for (let i = 0; i < this.size * this.size; i++) {
       const cell = document.createElement('div');
       cell.className = 'cell';
