@@ -5,31 +5,28 @@ export class Goblin {
     this.isVisible = false;
     this.previousPosition = null;
 
-    // Создаем элемент гоблина для каждой ячейки заранее
-    this.elements = [];
-    this.initElements();
-  }
+    this.element = document.createElement('img');
+    this.element.src = './img/goblin.png';
+    this.element.className = 'goblin';
+    this.element.style.display = 'none';
 
-  initElements() {
-    // Создаем элементы гоблина для всех ячеек и скрываем их
-    for (let i = 0; i < this.board.cells.length; i++) {
-      const element = document.createElement('img');
-      element.src = './img/goblin.png';
-      element.className = 'goblin';
-      element.style.display = 'none';
-
-      this.board.cells[i].appendChild(element);
-      this.elements.push(element);
-    }
+    document.body.appendChild(this.element);
   }
 
   move() {
     const availablePositions = [];
 
-    // Собираем все доступные позиции, исключая текущую
     for (let i = 0; i < this.board.cells.length; i++) {
-      if (i !== this.currentPosition) {
+      if (i !== this.currentPosition && i !== this.previousPosition) {
         availablePositions.push(i);
+      }
+    }
+
+    if (availablePositions.length === 0) {
+      for (let i = 0; i < this.board.cells.length; i++) {
+        if (i !== this.currentPosition) {
+          availablePositions.push(i);
+        }
       }
     }
 
@@ -37,16 +34,12 @@ export class Goblin {
       return false;
     }
 
-    // Выбираем случайную позицию из доступных
     const randomIndex = Math.floor(Math.random() * availablePositions.length);
     const newPosition = availablePositions[randomIndex];
 
-    // Скрываем предыдущего гоблина
-    if (this.currentPosition !== null) {
-      this.hide();
-    }
+    console.log('Previous position:', this.previousPosition, 'Current position:', this.currentPosition, 'New position:', newPosition);
 
-    // Показываем нового гоблина
+    this.previousPosition = this.currentPosition;
     this.currentPosition = newPosition;
     this.show();
 
@@ -56,14 +49,21 @@ export class Goblin {
   show() {
     if (this.currentPosition === null) return;
 
-    this.elements[this.currentPosition].style.display = 'block';
+    const cell = this.board.cells[this.currentPosition];
+    cell.appendChild(this.element);
+    this.element.style.display = 'block';
     this.isVisible = true;
   }
 
   hide() {
-    if (this.currentPosition !== null) {
-      this.elements[this.currentPosition].style.display = 'none';
-    }
+    this.element.style.display = 'none';
     this.isVisible = false;
+
+    if (this.currentPosition !== null) {
+      const cell = this.board.cells[this.currentPosition];
+      if (cell.contains(this.element)) {
+        cell.removeChild(this.element);
+      }
+    }
   }
 }
