@@ -6,20 +6,18 @@ export class Goblin {
     this.previousPosition = null;
 
     this.element = document.createElement('img');
+    this.element.src = './img/goblin.png';
     this.element.className = 'goblin';
     this.element.style.display = 'none';
 
-    // Используем require для правильной обработки пути Webpack
-    const goblinImage = require('../img/goblin.png');
-    this.element.src = goblinImage;
+    document.body.appendChild(this.element);
   }
 
   move() {
     const availablePositions = [];
 
-    // Собираем все доступные позиции, исключая предыдущую
     for (let i = 0; i < this.board.cells.length; i++) {
-      if (i !== this.previousPosition) {
+      if (i !== this.currentPosition) {
         availablePositions.push(i);
       }
     }
@@ -31,7 +29,6 @@ export class Goblin {
     const randomIndex = Math.floor(Math.random() * availablePositions.length);
     const newPosition = availablePositions[randomIndex];
 
-    this.hide();
     this.previousPosition = this.currentPosition;
     this.currentPosition = newPosition;
     this.show();
@@ -43,7 +40,7 @@ export class Goblin {
     if (this.currentPosition === null) return;
 
     const cell = this.board.cells[this.currentPosition];
-    cell.append(this.element);
+    cell.appendChild(this.element);
     this.element.style.display = 'block';
     this.isVisible = true;
   }
@@ -52,8 +49,11 @@ export class Goblin {
     this.element.style.display = 'none';
     this.isVisible = false;
 
-    if (this.element.parentNode) {
-      this.element.remove();
+    if (this.currentPosition !== null) {
+      const cell = this.board.cells[this.currentPosition];
+      if (cell.contains(this.element)) {
+        cell.removeChild(this.element);
+      }
     }
   }
 }
