@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -8,7 +7,7 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    assetModuleFilename: 'images/[name][ext]'
+    publicPath: '/goblin-game/'
   },
   module: {
     rules: [
@@ -20,7 +19,7 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'images/[name][ext]'
+          filename: 'img/[name][ext]'
         }
       },
     ],

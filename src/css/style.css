@@ -7,11 +7,11 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    cursor: url('../img/hammer.png'), auto;
+    cursor: url('img/hammer.png'), auto;
 }
 
 .container {
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
@@ -20,17 +20,20 @@ body {
 .stats {
     margin-bottom: 20px;
     font-size: 18px;
-    height: 60px;
+    height: 40px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 
 .board {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
     gap: 10px;
-    margin-bottom: 20px;
+    justify-content: center;
+    margin: 0 auto 20px;
 }
 
 .cell {
@@ -45,14 +48,7 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
     position: relative;
-}
-
-.cell::before {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 80px;
-    visibility: hidden;
+    overflow: hidden;
 }
 
 .cell:hover {
@@ -89,6 +85,7 @@ body {
 
 .modal h2 {
     margin-bottom: 20px;
+    color: #333;
 }
 
 button {

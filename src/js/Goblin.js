@@ -6,27 +6,40 @@ export class Goblin {
     this.previousPosition = null;
 
     this.element = document.createElement('img');
-    this.element.src = './img/goblin.png';
     this.element.className = 'goblin';
     this.element.style.display = 'none';
+
+    // Webpack обработает путь к изображению
+    const goblinImage = require('../img/goblin.png');
+    this.element.src = goblinImage;
   }
 
   move() {
     const availablePositions = [];
 
-    // Собираем доступные позиции, исключая текущую
     for (let i = 0; i < this.board.cells.length; i++) {
-      if (i !== this.currentPosition) {
+      if (i !== this.currentPosition && i !== this.previousPosition) {
         availablePositions.push(i);
       }
     }
 
-    if (availablePositions.length === 0) return false;
+    if (availablePositions.length === 0) {
+      for (let i = 0; i < this.board.cells.length; i++) {
+        if (i !== this.currentPosition) {
+          availablePositions.push(i);
+        }
+      }
+    }
+
+    if (availablePositions.length === 0) {
+      return false;
+    }
 
     const randomIndex = Math.floor(Math.random() * availablePositions.length);
     const newPosition = availablePositions[randomIndex];
 
     this.hide();
+    this.previousPosition = this.currentPosition;
     this.currentPosition = newPosition;
     this.show();
 
