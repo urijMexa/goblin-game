@@ -14,29 +14,19 @@ export class Goblin {
   move() {
     const availablePositions = [];
 
+    // Собираем доступные позиции, исключая текущую
     for (let i = 0; i < this.board.cells.length; i++) {
-      if (i !== this.currentPosition && i !== this.previousPosition) {
+      if (i !== this.currentPosition) {
         availablePositions.push(i);
       }
     }
 
-    if (availablePositions.length === 0) {
-      for (let i = 0; i < this.board.cells.length; i++) {
-        if (i !== this.currentPosition) {
-          availablePositions.push(i);
-        }
-      }
-    }
-
-    if (availablePositions.length === 0) {
-      return false;
-    }
+    if (availablePositions.length === 0) return false;
 
     const randomIndex = Math.floor(Math.random() * availablePositions.length);
     const newPosition = availablePositions[randomIndex];
 
     this.hide();
-    this.previousPosition = this.currentPosition;
     this.currentPosition = newPosition;
     this.show();
 
@@ -47,7 +37,7 @@ export class Goblin {
     if (this.currentPosition === null) return;
 
     const cell = this.board.cells[this.currentPosition];
-    cell.appendChild(this.element);
+    cell.append(this.element);
     this.element.style.display = 'block';
     this.isVisible = true;
   }
@@ -56,8 +46,8 @@ export class Goblin {
     this.element.style.display = 'none';
     this.isVisible = false;
 
-    if (this.currentPosition !== null && this.element.parentNode) {
-      this.element.parentNode.removeChild(this.element);
+    if (this.element.parentNode) {
+      this.element.remove();
     }
   }
 }
