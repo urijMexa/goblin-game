@@ -7,7 +7,7 @@ export class GameController {
     this.maxMisses = 5;
     this.isGameActive = true;
     this.timer = null;
-    this.goblinTimer = null;
+    this.goblinTimeout = null;
 
     this.scoreElement = document.getElementById('score');
     this.missesElement = document.getElementById('misses');
@@ -30,26 +30,25 @@ export class GameController {
   startGame() {
     this.timer = setInterval(() => {
       if (!this.isGameActive) return;
-
       this.moveGoblin();
     }, 1000);
   }
 
   moveGoblin() {
+    // Очищаем предыдущий таймаут
+    if (this.goblinTimeout) {
+      clearTimeout(this.goblinTimeout);
+    }
+
     if (!this.goblin.move()) {
       this.handleMiss();
       return;
     }
 
-    // Очищаем предыдущий таймер
-    if (this.goblinTimer) {
-      clearTimeout(this.goblinTimer);
-    }
-
-    // Устанавливаем таймер для скрытия гоблина
-    this.goblinTimer = setTimeout(() => {
+    // Устанавливаем таймаут для автоматического скрытия гоблина через 1 секунду
+    this.goblinTimeout = setTimeout(() => {
       if (this.isGameActive && this.goblin.isVisible) {
-        this.handleMiss();
+        this.handleMiss(); // Промах если гоблин не был кликнут
         this.goblin.hide();
       }
     }, 1000);
@@ -66,9 +65,9 @@ export class GameController {
   }
 
   handleHit() {
-    // Очищаем таймер при попадании
-    if (this.goblinTimer) {
-      clearTimeout(this.goblinTimer);
+    // Очищаем таймаут скрытия гоблина
+    if (this.goblinTimeout) {
+      clearTimeout(this.goblinTimeout);
     }
 
     this.score++;
@@ -103,9 +102,8 @@ export class GameController {
     this.isGameActive = false;
     clearInterval(this.timer);
 
-    // Очищаем таймер гоблина
-    if (this.goblinTimer) {
-      clearTimeout(this.goblinTimer);
+    if (this.goblinTimeout) {
+      clearTimeout(this.goblinTimeout);
     }
 
     this.modalMessage.textContent = `Game Over! Your score: ${this.score}`;
@@ -117,10 +115,9 @@ export class GameController {
     this.misses = 0;
     this.isGameActive = true;
 
-    // Очищаем все таймеры
     clearInterval(this.timer);
-    if (this.goblinTimer) {
-      clearTimeout(this.goblinTimer);
+    if (this.goblinTimeout) {
+      clearTimeout(this.goblinTimeout);
     }
 
     this.modal.style.display = 'none';
