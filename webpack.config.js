@@ -1,40 +1,37 @@
+/* eslint-disable no-undef */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/js/app.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+    assetModuleFilename: 'images/[name][ext]'
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-        },
-      },
-      {
-        test: /\.css$/,
+        test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {},
-          },
-        ],
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name][ext]'
+        }
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      filename: 'index.html',
     }),
   ],
+  devServer: {
+    static: './dist',
+    open: true,
+  },
 };
