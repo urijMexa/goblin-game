@@ -2,6 +2,7 @@
   "name": "goblin-game",
   "version": "1.0.0",
   "description": "Goblin game",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development",
