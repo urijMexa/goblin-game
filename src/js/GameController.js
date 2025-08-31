@@ -36,12 +36,10 @@ export class GameController {
 
   moveGoblin() {
     if (!this.goblin.move()) {
-      // Если гоблин не смог переместиться (все позиции заняты)
       this.handleMiss();
       return;
     }
 
-    // Увеличиваем промахи, если гоблин исчез и не был кликнут
     setTimeout(() => {
       if (this.isGameActive && this.goblin.isVisible) {
         this.handleMiss();
@@ -56,7 +54,7 @@ export class GameController {
     if (this.goblin.currentPosition === index && this.goblin.isVisible) {
       this.handleHit();
     } else {
-      this.handleMiss();
+      this.handleMissClick();
     }
   }
 
@@ -67,6 +65,15 @@ export class GameController {
   }
 
   handleMiss() {
+    this.misses++;
+    this.updateUI();
+
+    if (this.misses >= this.maxMisses) {
+      this.endGame();
+    }
+  }
+
+  handleMissClick() {
     this.misses++;
     this.updateUI();
 

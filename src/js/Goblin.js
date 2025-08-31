@@ -6,7 +6,7 @@ export class Goblin {
     this.previousPosition = null;
 
     this.element = document.createElement('img');
-    this.element.src = '../img/goblin.png'; // Правильный путь
+    this.element.src = './img/goblin.png';
     this.element.className = 'goblin';
     this.element.style.display = 'none';
 
@@ -16,8 +16,9 @@ export class Goblin {
   move() {
     const availablePositions = [];
 
+    // Собираем все доступные позиции, исключая текущую
     for (let i = 0; i < this.board.cells.length; i++) {
-      if (i !== this.currentPosition && i !== this.previousPosition) {
+      if (i !== this.currentPosition) {
         availablePositions.push(i);
       }
     }
@@ -26,9 +27,14 @@ export class Goblin {
       return false;
     }
 
+    // Выбираем случайную позицию из доступных
     const randomIndex = Math.floor(Math.random() * availablePositions.length);
     const newPosition = availablePositions[randomIndex];
 
+    // Логируем для отладки
+    console.log('Previous position:', this.previousPosition, 'Current position:', this.currentPosition, 'New position:', newPosition);
+
+    // Обновляем позиции
     this.previousPosition = this.currentPosition;
     this.currentPosition = newPosition;
     this.show();
