@@ -8,7 +8,6 @@ export class GameController {
     this.isGameActive = true;
     this.timer = null;
     this.goblinTimer = null;
-    this.wasMissed = false; // Флаг для отслеживания промахов
 
     this.scoreElement = document.getElementById('score');
     this.missesElement = document.getElementById('misses');
@@ -37,8 +36,6 @@ export class GameController {
   }
 
   moveGoblin() {
-    this.wasMissed = false; // Сброс флага при каждом новом появлении гоблина
-
     if (!this.goblin.move()) {
       this.handleMiss();
       return;
@@ -51,11 +48,8 @@ export class GameController {
 
     // Устанавливаем новый таймер для скрытия гоблина через 1 секунду
     this.goblinTimer = setTimeout(() => {
-      if (this.isGameActive && this.goblin.isVisible) {
-        // Если не было промаха (клика по пустой ячейке), то засчитываем пропуск
-        if (!this.wasMissed) {
-          this.handleMiss();
-        }
+      if (this.isGameActive) {
+        this.handleMiss();
         this.goblin.hide();
       }
     }, 1000);
@@ -92,10 +86,11 @@ export class GameController {
   }
 
   handleMissClick() {
-    // Если еще не было промаха для текущего гоблина, то увеличиваем
-    if (!this.wasMissed) {
-      this.wasMissed = true;
-      this.handleMiss();
+    this.misses++;
+    this.updateUI();
+
+    if (this.misses >= this.maxMisses) {
+      this.endGame();
     }
   }
 
@@ -108,6 +103,7 @@ export class GameController {
     this.isGameActive = false;
     clearInterval(this.timer);
 
+    // Очищаем таймер гоблина
     if (this.goblinTimer) {
       clearTimeout(this.goblinTimer);
     }
@@ -120,8 +116,8 @@ export class GameController {
     this.score = 0;
     this.misses = 0;
     this.isGameActive = true;
-    this.wasMissed = false;
 
+    // Очищаем все таймеры
     clearInterval(this.timer);
     if (this.goblinTimer) {
       clearTimeout(this.goblinTimer);

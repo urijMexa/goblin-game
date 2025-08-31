@@ -9,7 +9,7 @@ export class Goblin {
     this.element.className = 'goblin';
     this.element.style.display = 'none';
 
-    // Webpack обработает путь к изображению
+    // Используем require для правильной обработки пути Webpack
     const goblinImage = require('../img/goblin.png');
     this.element.src = goblinImage;
   }
@@ -17,17 +17,10 @@ export class Goblin {
   move() {
     const availablePositions = [];
 
+    // Собираем все доступные позиции, исключая предыдущую
     for (let i = 0; i < this.board.cells.length; i++) {
-      if (i !== this.currentPosition && i !== this.previousPosition) {
+      if (i !== this.previousPosition) {
         availablePositions.push(i);
-      }
-    }
-
-    if (availablePositions.length === 0) {
-      for (let i = 0; i < this.board.cells.length; i++) {
-        if (i !== this.currentPosition) {
-          availablePositions.push(i);
-        }
       }
     }
 
