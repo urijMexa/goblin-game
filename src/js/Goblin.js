@@ -29,7 +29,7 @@ export class Goblin {
     const randomIndex = Math.floor(Math.random() * availablePositions.length);
     const newPosition = availablePositions[randomIndex];
 
-    this.previousPosition = this.currentPosition;
+    this.hide();
     this.currentPosition = newPosition;
     this.show();
 
